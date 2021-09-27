@@ -1,21 +1,37 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const { ApolloServer } = require('apollo-server-express');
+const path = require('path');
 
-const app = express();
-const port = process.env.PORT || 5000;
+const { typeDefs, resolvers } = require('./schemas');
+// const { authMiddleware } = require('./utils/auth');
+const db = require('./config/connection');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+async function startApolloServer(typeDefs, resolvers){
+  const PORT = process.env.PORT || 3001;
+  const server = new ApolloServer({typeDefs, resolvers})
+  const app = express();
+  await server.start();
+  server.applyMiddleware({app, path: '/graphql'});
+  
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
+  
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')));
+  }
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+  
+
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+  console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+})
 });
+}
 
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-});
-
-app.listen(port, () => console.log(`Listening on port ${port}`));
+startApolloServer(typeDefs, resolvers);
