@@ -8,7 +8,10 @@
     "seed": "node seeders/seeds.js"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "apollo-server-express": "^3.3.0",
+    "bcrypt": "^5.0.1",
+    "express": "^4.16.4",
+    "graphql": "^15.6.0",
+    "mongoose": "^6.0.8"
   }
 }
