@@ -14,6 +14,11 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
+    userType: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
     toJSON: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +8,12 @@ import Typography from '@material-ui/core/Typography';
 
 import TreeStructureView from '../../elements/TreeStructureView';
 import FilesView from '../../elements/FilesView';
+
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Auth from "../../utils/auth";
+import { GlobalContext as UserContext } from "../../context/store";
+import {Link} from "react-router-dom"
 
 
 
@@ -39,14 +45,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-
+  const { state } = useContext(UserContext);
+console.log("HomeState:", state);
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Permanent drawer
+          <Stack direction="row" spacing={2}>
+      <Button variant="contained">Something</Button>
+      {/* <Button variant="contained" href="/dashboard">
+              Login
+              </Button> */}
+      {
+              Auth.loggedIn() ?
+              <Link to="/dashboard">
+              <Button variant="contained">
+              Dashboard
+              </Button>
+              </Link>
+                :
+                <span>(log in to check out)</span>
+            }
+    </Stack>
           </Typography>
         </Toolbar>
       </AppBar>
