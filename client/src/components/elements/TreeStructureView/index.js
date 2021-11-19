@@ -4,39 +4,30 @@ import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
-import print from "../../../workWithFiles/readFiles";
 
-async function printArray(path) {
-  try {
-    const array = await print(path);
-    console.log(array);
+import { useQuery } from "@apollo/react-hooks";
+import { QUERY_FILES } from "../../utils/queries";
 
-    return array;
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-const sample = {
-  id: "root",
-  name: "Parent",
-  children: [
-    {
-      id: "1",
-      name: "Child - 1",
-    },
-    {
-      id: "3",
-      name: "Child - 3",
-      children: [
-        {
-          id: "4",
-          name: "Child - 4",
-        },
-      ],
-    },
-  ],
-};
+// const sample = {
+//   id: "root",
+//   name: "Parent",
+//   children: [
+//     {
+//       id: "1",
+//       name: "Child - 1",
+//     },
+//     {
+//       id: "3",
+//       name: "Child - 3",
+//       children: [
+//         {
+//           id: "4",
+//           name: "Child - 4",
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 const useStyles = makeStyles({
   root: {
@@ -47,29 +38,47 @@ const useStyles = makeStyles({
 });
 
 export default function TreeStructureView() {
+  const { loading, data, error } = useQuery(QUERY_FILES);
+  console.log("testData1", data);
+
+  // console.log("test", files);
+
   const classes = useStyles();
 
-  const [data, setData] = useState({});
-  const path = "C://";
+  // const [data1, setData] = useState({});
+  // const path = "C://";
 
-  // TODO: Move it to the server side. Get only array. All work should be implemented in the server side
-  const printSomething = async () => {
-    // const array = await printArray(path);
-    // console.log(array);
-    setData(sample);
-  };
+  // const printSomething = async () => {
+  //   // const array = await printArray(path);
+  //   // console.log(array);
 
-  useEffect(() => {
-    printSomething();
-  }, []);
+  //   const files = data?.files || [];
 
-  const renderTree = (nodes) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children)
-        ? nodes.children.map((node) => renderTree(node))
-        : null}
-    </TreeItem>
+  //   const sample = {
+  //     id: "root",
+  //     path: "Parent",
+  //     children: files,
+  //   };
+  //   console.log("sample: ", sample);
+  //   setData(sample);
+  // };
+
+  // useEffect(() => {
+  //   // console.log("test112222222222222222222222222222: ")
+  //   printSomething();
+  // }, []);
+
+  const renderItem = (node) => (
+    <TreeItem key={node.path} nodeId={node.path} label={node.path}></TreeItem>
   );
+
+  const renderTree = (nodes) =>
+    Array.isArray(nodes.files)
+      ? nodes.files.map((node) => renderItem(node))
+      : null;
+
+  if (loading) return "Loading...";
+  if (error) return <div>{error.message}</div>;
 
   return (
     <TreeView

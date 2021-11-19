@@ -4,15 +4,44 @@ const { signToken } = require("../utils/auth");
 const fs = require("fs");
 var path = require("path");
 
+
+async function print(path) {
+  const fileNames = [];
+  let i = 0;
+  const dir = await fs.promises.opendir(path);
+  for await (const dirent of dir) {
+    // console.log(dirent.name);
+    if (dirent.isDirectory()) {
+      fileNames.push(
+        // id: i++,
+        // name: dirent.name,
+        dirent.name
+      );
+    }
+  }
+  return fileNames;
+}
+
+async function printArray(path) {
+  try {
+    const array = await print(path);
+    // console.log(array);
+    return array;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 const resolvers = {
   Query: {
     user: async () => {
       return await User.find();
     },
 
-    files: () => {
-      const filesPath = path.join(__dirname, "./files");
-      const files = fs.readdirSync(filesPath);
+    files: async () => {
+      const filesPath = "C://";
+      // const filesPath = path.join(__dirname, "./files");
+      const files = await printArray(filesPath);
       return files.map((file) => ({ path: file }));
     },
 
