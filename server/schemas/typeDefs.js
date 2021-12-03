@@ -6,8 +6,12 @@ const typeDefs = gql`
     username: String
     password: String
   }
+
   type File {
-    path: String
+    id: String
+    name: String
+    type: String
+    folders: [String]
   }
   type Query {
     user: User

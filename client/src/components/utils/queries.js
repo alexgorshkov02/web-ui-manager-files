@@ -1,9 +1,12 @@
 import gql from "graphql-tag";
 
 export const QUERY_FILES = gql`
-  query Query {
+  query Files {
     files {
-      path
+      id
+      name
+      type
+      folders
     }
   }
 `;
