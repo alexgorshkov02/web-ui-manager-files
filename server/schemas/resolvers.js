@@ -149,6 +149,7 @@ const resolvers = {
     },
 
     files: async () => {
+      //Temporary hardcoded. Make a config or an option in UI
       const filesPath = "C://testFolder";
       // const filesPath = path.join(__dirname, "./files");
       const files = await printArray(filesPath);
