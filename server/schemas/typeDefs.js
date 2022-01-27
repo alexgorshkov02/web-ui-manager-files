@@ -6,9 +6,19 @@ const typeDefs = gql`
     username: String
     password: String
   }
+
+  type File {
+    id: String
+    name: String
+    type: String
+    folders: [String]
+  }
   type Query {
     user: User
+    files: [File]
+    greeting: String
   }
+
   type Auth {
     token: ID
     user: User
