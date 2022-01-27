@@ -107,3 +107,4 @@ dist
 # misc
 .DS_Store
 .vs_code
+.vscode
