@@ -148,7 +148,7 @@ const resolvers = {
       return await User.find();
     },
 
-    files: async () => {
+    folders: async () => {
       //Temporary hardcoded. Make a config or an option in UI
       const filesPath = "C://testFolder";
       // const filesPath = path.join(__dirname, "./files");
@@ -157,7 +157,7 @@ const resolvers = {
         id: file.id,
         name: file.name,
         type: file.type,
-        folders: file.folders,
+        subfolders: file.folders,
       }));
     },
 

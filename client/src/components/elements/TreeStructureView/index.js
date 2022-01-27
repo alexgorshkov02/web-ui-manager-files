@@ -68,13 +68,19 @@ export default function TreeStructureView() {
   //   printSomething();
   // }, []);
 
+  function showFilesInFolder() {
+    alert('Hello!');
+  }
+
   const renderItem = (node) => {
     //Temp solution to make different keys and nodeId. As an idea use the path like parentFolder/childFolder as a key and nodeId
     let i=0; 
+    console.log(node.id);
     return <TreeItem key={node.id} nodeId={node.id} label={node.name}>
-    {Array.isArray(node.folders)
-      ? node.folders.map((folder) => {
-        return <TreeItem key={node.name+i++} nodeId={node.name+i++} label={folder} />
+    {Array.isArray(node.subfolders)
+      ? node.subfolders.map((folder) => {
+        console.log(node.name+'/'+folder);
+        return <TreeItem key={node.name+'/'+folder} nodeId={node.name+'/'+folder} label={folder} onClick={showFilesInFolder} />
       })
       : null}
       </TreeItem>
@@ -82,8 +88,8 @@ export default function TreeStructureView() {
     };
 
   const renderTree = (nodes) =>
-    Array.isArray(nodes.files)
-      ? nodes.files.map((node) => renderItem(node))
+    Array.isArray(nodes.folders)
+      ? nodes.folders.map((node) => renderItem(node))
       : null;
 
   if (loading) return "Loading...";

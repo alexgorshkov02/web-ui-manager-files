@@ -7,15 +7,16 @@ const typeDefs = gql`
     password: String
   }
 
-  type File {
+  type Folder {
     id: String
     name: String
     type: String
-    folders: [String]
+    subfolders: [String]
   }
+  
   type Query {
     user: User
-    files: [File]
+    folders: [Folder]
     greeting: String
   }
 
