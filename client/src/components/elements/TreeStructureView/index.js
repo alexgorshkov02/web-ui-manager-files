@@ -68,13 +68,14 @@ export default function TreeStructureView() {
   //   printSomething();
   // }, []);
 
-  function showFilesInFolder() {
+  function showFilesInFolder(e) {
+    console.log(e);
     alert('Hello!');
   }
 
   const renderItem = (node) => {
     //Temp solution to make different keys and nodeId. As an idea use the path like parentFolder/childFolder as a key and nodeId
-    let i=0; 
+    // let i=0; 
     console.log(node.id);
     return <TreeItem key={node.id} nodeId={node.id} label={node.name}>
     {Array.isArray(node.subfolders)
