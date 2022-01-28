@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const QUERY_FILES = gql`
+export const QUERY_FOLDERS = gql`
 query Folders {
   folders {
     id

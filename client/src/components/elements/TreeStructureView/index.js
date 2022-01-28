@@ -6,7 +6,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 
 import { useQuery } from "@apollo/react-hooks";
-import { QUERY_FILES } from "../../utils/queries";
+import { QUERY_FOLDERS } from "../../utils/queries";
 
 // const sample = {
 //   id: "root",
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 });
 
 export default function TreeStructureView() {
-  const { loading, data, error } = useQuery(QUERY_FILES);
+  const { loading, data, error } = useQuery(QUERY_FOLDERS);
   console.log("testData1", data);
 
   // console.log("test", files);
