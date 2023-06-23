@@ -20,6 +20,6 @@
     "url": "https://github.com/alexgorshkov02/web-ui-manager-files/issues"
   },
   "dependencies": {
-    "concurrently": "^6.2.1"
+    "concurrently": "^6.5.1"
   }
 }
